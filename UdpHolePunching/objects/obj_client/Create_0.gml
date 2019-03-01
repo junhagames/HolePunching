@@ -1,9 +1,9 @@
-socket = network_create_socket_ext(network_socket_udp,get_integer(string_hash_to_newline("[클라이언트] 연결할 포트#{기본값}: 25565"), 25565));
+socket = network_create_socket_ext(network_socket_udp, get_integer("[클라이언트] 연결할 포트", 25565));
 myname = get_string("[클라이언트] 플레이어 닉네임", "늅늅이");
 master_ip = get_string("[클라이언트] 접속할 마스터서버 IP", "127.0.0.1");
-master_port = get_integer(string_hash_to_newline("[클라이언트] 접속할 마스터서버 PORT#{기본값}: 7777"), 7777);
+master_port = get_integer("[클라이언트] 접속할 마스터서버 PORT", 7777);
 server_ip = get_string("[클라이언트] 접속할 게임서버 IP", "127.0.0.1");
-server_port = get_integer(string_hash_to_newline("[클라이언트] 접속할 게임서버 PORT#{기본값}: 2620"), 2620);
+server_port = get_integer("[클라이언트] 접속할 게임서버 PORT", 2620);
 buffer = buffer_create(1, buffer_grow, 1);
 myid = 0;
 connected = false;

@@ -1,4 +1,4 @@
-var type = get_integer(string_hash_to_newline("게임서버:	{1}#클라이언트:	{2}#마스터서버	{3}##게임종료	{4}"), "");
+var type = get_integer(string_hash_to_newline("게임서버:	{1}#클라이언트:	{2}#마스터서버	{3}##게임종료:	{4}"), "");
 
 switch (type) {
 	case 1:

@@ -1,7 +1,7 @@
-listen = network_create_socket_ext(network_socket_udp, get_integer(string_hash_to_newline("[게임서버] 호스팅할 게임서버 포트#{기본값}: 2620"), 2620));
+listen = network_create_socket_ext(network_socket_udp, get_integer("[게임서버] 호스팅할 게임서버 포트", 2620));
 name = get_string("[게임서버] 호스팅할 게임서버 이름", "짱짱서버");
 master_ip = get_string("[게임서버] 접속할 마스터서버 IP", "127.0.0.1");
-master_port = get_integer(string_hash_to_newline("[게임서버] 접속할 마스터서버 PORT#{기본값}: 7777"), 7777);
+master_port = get_integer("[게임서버] 접속할 마스터서버 PORT", 7777);
 buffer = buffer_create(1, buffer_grow, 1);
 connected = false;
 players = 0;
