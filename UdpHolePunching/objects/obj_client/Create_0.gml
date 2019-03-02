@@ -6,9 +6,9 @@ master_port = get_integer("[클라이언트] 접속할 마스터서버 PORT", 77
 server_ip = get_string("[클라이언트] 접속할 게임서버 IP", "127.0.0.1");
 server_port = get_integer("[클라이언트] 접속할 게임서버 PORT", 2620);
 buffer = buffer_create(1, buffer_grow, 1);
-connected = false;
+isConnected = false;
 
-// 마스터서버를 거처 게임서버에게 클라이언트 닉네임, 아이피, 포트 알리기
+// 마스터서버를 거처 게임서버에게 플레이어 정보 알리기
 buffer_write(buffer, buffer_u8, PACKET.CLIENT_REGISTER);
 buffer_write(buffer, buffer_string, server_ip);
 buffer_write(buffer, buffer_u16, server_port);

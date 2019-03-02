@@ -4,7 +4,7 @@ name = get_string("[게임서버] 호스팅할 게임서버 이름", "짱짱서�
 master_ip = get_string("[게임서버] 접속할 마스터서버 IP", "127.0.0.1");
 master_port = get_integer("[게임서버] 접속할 마스터서버 PORT", 7777);
 buffer = buffer_create(1, buffer_grow, 1);
-connected = false;
+isConnected = false;
 players = 0;
 
 // 플레이어 리스트 생성

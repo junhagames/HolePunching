@@ -1,39 +1,42 @@
 var ip = argument0;
 var port = argument1;
 var buff = argument2;
-var message_id = buffer_read(buff, buffer_u8);
+var command = buffer_read(buff, buffer_u8);
 
-switch (message_id) {
-	case PACKET.CONNECTED:
-	    show_message("[게임서버] 마스터서버에 등록됬습니다!");
-	    connected = true;
+switch (command) {
+	case PACKET.isConnected:
+	    show_message("[게임서버] 마스터서버에 등록되었습니다!");
+	    isConnected = true;
 		break;
 	
-	case PACKET.NEWCLIENT:
-	    var player_hash = buffer_read(buff, buffer_string);
-		var player_name = buffer_read(buff, buffer_string);
-	    var player_ip = buffer_read(buff, buffer_string);
-	    var player_port = buffer_read(buff, buffer_u16);
-		net_register(player_list, player_hash, player_name, player_ip, player_port);
+	case PACKET.GAMESERVER_NEWPLAYER:
+		var player_map = ds_map_create();
+		player_map[? "hash"] = buffer_read(buff, buffer_string);
+		player_map[? "name"] = buffer_read(buff, buffer_string);
+		player_map[? "ip"] = buffer_read(buff, buffer_string);
+		player_map[? "port"] = buffer_read(buff, buffer_u16);
+		ds_list_add(player_list, player_map);
 		
 		players++;
 		break;
 	
 	case PACKET.CLIENT_DISCONNECT:
-	    for (i = 0; i < 100; i++) {
-			if (ds_map_find_value(player[i], "name") == nick) {
-				// 클라이언트 등록 초기화
-				ds_map_replace(player[i], "id", 0);
-				ds_map_replace(player[i], "name", "");
-				
-				players--;
+		for (var i = 0; i < ds_list_size(player_list); i++) {
+			var player_map = player_list[| i];
+			var player_ip = buffer_read(buff, buffer_string);
+			var player_port = buffer_read(buff, buffer_u16);
+			
+			if (player_map[? "ip"] == player_ip && player_map[? "port"] == player_port) {
+				ds_list_delete(player_list, i);
 				break;
 			}
 		}
+		
+		players--;
 		break;
 	
 	case PACKET.MASTERSERVER_CLOSE:
-		show_message("[게임서버] 마스터서버가 종료됬습니다!");
+		show_message("[게임서버] 마스터서버가 종료되었습니다!");
 	    game_end();
 		break;
 }

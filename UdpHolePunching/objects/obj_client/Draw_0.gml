@@ -1,9 +1,8 @@
 draw_set_color(c_lime);
-draw_text(0, 0, "<" + name + "클라이언트: " + string(hash) + ">");
+draw_text(0, 0, "<" + name + " 클라이언트: " + string(hash) + ">");
 draw_set_color(c_white);
-draw_text(0, 32, "ID: " + string(myid));
 
-if (!connected) {
+if (!isConnected) {
 	draw_set_color(c_yellow);
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_middle);

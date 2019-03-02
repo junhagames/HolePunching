@@ -1,1 +1,0 @@
-server = network_create_server(network_socket_tcp, 8888, 8);
