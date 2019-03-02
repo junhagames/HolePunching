@@ -1,5 +1,5 @@
 draw_set_color(c_lime);
-draw_text(0, 0, "<" + myname + "클라이언트>");
+draw_text(0, 0, "<" + name + "클라이언트: " + string(hash) + ">");
 draw_set_color(c_white);
 draw_text(0, 32, "ID: " + string(myid));
 

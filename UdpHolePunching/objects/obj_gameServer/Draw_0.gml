@@ -1,5 +1,5 @@
 draw_set_color(c_lime);
-draw_text(0, 0, "<" + name + "게임서버>");
+draw_text(0, 0, "<" + name + "게임서버: " + string(hash) + ">");
 draw_set_color(c_white);
 draw_text(0, 32, "접속자수: " + string(players));
 

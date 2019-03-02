@@ -4,116 +4,107 @@ var buff = argument2;
 var message_id = buffer_read(buff, buffer_u8);
 
 switch (message_id) {
-	case PACKET.GAMESERVER_REG:
-        var nick = buffer_read(buff, buffer_string);
+	case PACKET.GAMESERVER_REGISTER:
+        var server_hash = buffer_read(buff, buffer_string);
+		var server_name = buffer_read(buff, buffer_string);
+		net_register(server_list, server_hash, server_name, ip, port);
 		
-        for (var i = 0; i < 100; i++) {
-			if (ds_map_find_value(server[i], "name") == "") {
-				// 마스터서버에 게임서버 등록
-				ds_map_replace(server[i], "name", nick);
-				ds_map_replace(server[i], "ip", ip);
-                ds_map_replace(server[i], "port", port);
-			
-				// 게임서버에 연결 완료 알리기
-                buffer_seek(buffer, buffer_seek_start, 0);
-                buffer_write(buffer, buffer_u8, PACKET.GAMESERVER_CONNECTED);
-                network_send_udp(listen, ip, port, buffer, buffer_tell(buffer));
-				
-                servers++;
-                break;
-			}
-		}
+		// 게임서버에 연결 완료 알리기
+		buffer_seek(buffer, buffer_seek_start, 0);
+		buffer_write(buffer, buffer_u8, PACKET.CONNECTED);
+		network_send_udp(socket, ip, port, buffer, buffer_tell(buffer));
+		
+		servers++;
 		break;
         
-	case PACKET.CLIENT_REG:
-		var get_ip = buffer_read(buff, buffer_string);
-		var get_port = buffer_read(buff, buffer_u16);
-		var nick = buffer_read(buff, buffer_string);
-		var isFind = false;
-		
-		for (var i = 0; i < 100; i++) {
-			if (ds_map_find_value(server[i], "ip") == get_ip && ds_map_find_value(server[i], "port") == get_port) {
+	case PACKET.CLIENT_REGISTER:
+		var server_ip = buffer_read(buff, buffer_string);
+		var server_port = buffer_read(buff, buffer_u16);
+		var client_hash = buffer_read(buff, buffer_string);
+		var client_name = buffer_read(buff, buffer_string);
+		var exists = false;
+	
+		for (var i = 0; i < ds_list_size(server_list); i++) {
+			var map = ds_list_find_value(server_list, i);
+			var find_ip = ds_map_find_value(map, "ip");
+			var find_port = ds_map_find_value(map, "port");
+			
+			if (find_ip == server_ip && find_port == server_port) {
 				// 마스터서버에 클라이언트 정보 추가
-				ds_map_replace(player[i], "name", nick);
-				ds_map_replace(player[i], "ip", ip);
-				ds_map_replace(player[i], "port", port);
+				net_register(player_list, client_hash, client_name, ip, port);
 				
 				// 클라이언트에게 연결 완료 알리기
 				buffer_seek(buffer, buffer_seek_start, 0);
-				buffer_write(buffer, buffer_u8, PACKET.CLIENT_CONNECTED);
-				network_send_udp(listen, ip, port, buffer, buffer_tell(buffer));
+				buffer_write(buffer, buffer_u8, PACKET.CONNECTED);
+				network_send_udp(socket, ip, port, buffer, buffer_tell(buffer));
 				
-				// 게임서버에게 클라이언트 닉네임, 아이피, 포트 알리기
-				// UDP hole punching 1단계
+				// 게임서버에게 플레이어 정보 알리기
 				buffer_seek(buffer, buffer_seek_start, 0);
-				buffer_write(buffer, buffer_u8, PACKET.GAMESERVER_NEWPLAYER);
-				buffer_write(buffer, buffer_string, nick);
+				buffer_write(buffer, buffer_u8, PACKET.NEWCLIENT);
+				buffer_write(buffer, buffer_string, client_hash);
+				buffer_write(buffer, buffer_string, client_name);
 				buffer_write(buffer, buffer_string, ip);
 				buffer_write(buffer, buffer_u16, port);
-				network_send_udp(listen, ds_map_find_value(server[i], "ip"), ds_map_find_value(server[i], "port"), buffer, buffer_tell(buffer));
+				network_send_udp(socket, server_ip, server_port, buffer, buffer_tell(buffer));
 				
 				players++;
-				isFind = true;
+				exists = true;
 				break;
 			}
 		}
-		if (!isFind) {
+
+		if (!exists) {
 			// 존재하지 않는 게임서버
 			buffer_seek(buffer, buffer_seek_start, 0);
 			buffer_write(buffer, buffer_u8, PACKET.CLIENT_CONNECTFAIL);
-			network_send_udp(listen, ip,port, buffer, buffer_tell(buffer));
+			network_send_udp(socket, ip, port, buffer, buffer_tell(buffer));
 		}
         break;
         
 	case PACKET.GAMESERVER_CLOSE:
-		var nick = buffer_read(buff, buffer_string);
-		
-	    for (var i = 0; i < 100; i++) {
-			if (ds_map_find_value(server[i], "name") == nick) {
-				// 게임서버 정보 초기화
-				ds_map_replace(server[i], "name", "");
-				ds_map_replace(server[i], "ip", "");
-				ds_map_replace(server[i], "port", 0);
-				
-				servers--;
-				break;
+		var index;
+		for (var i = 0; i < ds_list_size(server_list); i++) {
+			var map = ds_list_find_value(server_list, i);
+			var find_ip = ds_map_find_value(map, "ip");
+			var find_port = ds_map_find_value(map, "port");
+			
+			// 클라이언트에게 서버 종료 알리기
+			buffer_seek(buffer, buffer_seek_start, 0);
+			buffer_write(buffer, buffer_u8, PACKET.GAMESERVER_CLOSE);
+			network_send_udp(socket, find_ip, find_port, buffer, buffer_tell(buffer));
+			
+			if (find_ip == ip && find_port == port) {
+				index = i;
 			}
 		}
+			
+		// 게임서버 정보 초기화
+		ds_list_delete(server_list, index);
+		/// TODO ds_map 메모리 누수 확인
+		
+		servers--;
 		break;
         
 	case PACKET.CLIENT_DISCONNECT:
-		var nick = buffer_read(buff, buffer_string);
-		var get_ip = buffer_read(buff, buffer_string);
-		var get_port = buffer_read(buff, buffer_u16);
+		var server_ip = buffer_read(buff, buffer_string);
+		var server_port = buffer_read(buff, buffer_u16);
 		
 		// 게임서버에게 클라이언트 연결 종료 알리기
 		buffer_seek(buffer, buffer_seek_start, 0);
 		buffer_write(buffer, buffer_u8, PACKET.CLIENT_DISCONNECT);
-		buffer_write(buffer, buffer_string, nick);
-		network_send_udp(listen, get_ip, get_port, buffer, buffer_tell(buffer));
+		network_send_udp(socket, server_ip, server_port, buffer, buffer_tell(buffer));
 		
-		for (i = 0; i < 100; i++) {
-			if (ds_map_find_value(player[i], "name") == nick) {
+		for (var i = 0; i < ds_list_size(player_list); i++) {
+			var map = ds_list_find_value(player_list, i);
+			
+			if (map[? "ip"] == ip && map[? "port"]) {
 				// 클라이언트 정보 초기화
-				ds_map_replace(player[i], "ip", "");
-				ds_map_replace(player[i], "name", "");
-				ds_map_replace(player[i], "port", 0);
-				
-				players--;
-				break;
+				ds_list_delete(player_list, i);
+				/// TODO ds_map 메모리 누수 확인 
 			}
+			
+			players--;
+			break;
 		}
-		break;
-        
-	case PACKET.GAMESERVER_PASSID:
-		var get_ip = buffer_read(buff, buffer_string);
-		var get_port = buffer_read(buff, buffer_u16);
-		var get_id = buffer_read(buff, buffer_u8);
-		
-		// 클라이언트에게 ID 알리기
-		buffer_seek(buffer, buffer_seek_start, 0);
-		buffer_write(buffer, buffer_u8, PACKET.CLIENT_GETID);
-		buffer_write(buffer, buffer_u8, get_id);
-		network_send_udp(listen, get_ip, get_port, buffer, buffer_tell(buffer));
 		break;
 }
