@@ -15,7 +15,7 @@ switch (command) {
 		
 		// 게임서버에 연결완료 알리기
 		buffer_seek(buffer, buffer_seek_start, 0);
-		buffer_write(buffer, buffer_u8, PACKET.isConnected);
+		buffer_write(buffer, buffer_u8, PACKET.CONNECTED);
 		network_send_udp(socket, ip, port, buffer, buffer_tell(buffer));
 		
 		servers++;
@@ -43,7 +43,7 @@ switch (command) {
 				
 				// 플레이어에게 연결완료 알리기
 				buffer_seek(buffer, buffer_seek_start, 0);
-				buffer_write(buffer, buffer_u8, PACKET.isConnected);
+				buffer_write(buffer, buffer_u8, PACKET.CONNECTED);
 				network_send_udp(socket, ip, port, buffer, buffer_tell(buffer));
 				
 				// 게임서버에게 플레이어 정보 알리기

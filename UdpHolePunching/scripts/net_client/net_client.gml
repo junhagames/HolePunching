@@ -4,7 +4,7 @@ var buff = argument[2];
 var command = buffer_read(buff, buffer_u8);
 
 switch (command) {
-	case PACKET.isConnected:
+	case PACKET.CONNECTED:
 	    show_message("[클라이언트] 게임서버에 연결되었습니다!");
 	    isConnected = true;
 		break;
