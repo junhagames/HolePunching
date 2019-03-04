@@ -7,6 +7,7 @@ switch (command) {
 	case PACKET.CONNECTED:
 	    show_message("[클라이언트] 게임서버에 연결되었습니다!");
 	    isConnected = true;
+		room_goto_next();
 		break;
 	
 	case PACKET.CLIENT_CONNECTFAIL:
