@@ -1,1 +1,0 @@
-net_client_connecting(room_speed * 4);

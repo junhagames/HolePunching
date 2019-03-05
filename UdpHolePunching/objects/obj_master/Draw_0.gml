@@ -1,23 +1,24 @@
 draw_set_color(c_lime);
 draw_text(0, 0, "<마스터서버>");
 draw_set_color(c_white);
-draw_text(0, 32, "마스터서버 접속자수: " + string(ds_list_size(player_list)));
-draw_text(0, 64, "게임서버 호스팅수: " + string(ds_list_size(server_list)));
+draw_text(0, 32, "플레이어 접속자수: " + string(ds_list_size(playerList)));
+draw_text(0, 64, "게임서버 호스팅수: " + string(ds_list_size(serverList)));
 
-for (var i = 0; i < ds_list_size(player_list); i++) {
-	var player_map = player_list[| i];
+for (var i = 0; i < ds_list_size(playerList); i++) {
+	var playerMap = playerList[| i];
 	draw_set_color(c_red);
 	draw_text(0, 100 + 32 * (i + 1), 
-		string(player_map[? "hash"]) + " | " +
-		string(player_map[? "name"]) + " | " +
-		string(player_map[? "ip"]) + " | " +
-		string(player_map[? "port"]) + " | " +
-		string(player_map[? "server"]));
+		string(playerMap[? "hash"]) + " | " +
+		string(playerMap[? "nickName"]) + " | " +
+		string(playerMap[? "privateIp"]) + " | " +
+		string(playerMap[? "publicIp"]) + " | " +
+		string(playerMap[? "port"]) + " | " +
+		string(playerMap[? "serverHash"]));
 	draw_set_color(c_white);
 }
 
-for (var i = 0; i < ds_list_size(server_list); i++) {
-	var server_map = server_list[| i];
+for (var i = 0; i < ds_list_size(serverList); i++) {
+	var server_map = serverList[| i];
 	draw_set_color(c_blue);
 	draw_set_halign(fa_right);
 	draw_text(room_width, 100 + 32 * (i + 1),

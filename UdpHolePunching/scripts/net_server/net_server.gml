@@ -11,24 +11,24 @@ switch (command) {
 	
 	case PACKET.GAMESERVER_NEWPLAYER:
 		// 게임서버에 플레이어 정보 추가
-		var player_map = ds_map_create();
-		player_map[? "hash"] = buffer_read(buff, buffer_string);
-		player_map[? "name"] = buffer_read(buff, buffer_string);
-		player_map[? "ip"] = buffer_read(buff, buffer_string);
-		player_map[? "port"] = buffer_read(buff, buffer_u16);
-		ds_list_add(player_list, player_map);
+		var playerMap = ds_map_create();
+		playerMap[? "hash"] = buffer_read(buff, buffer_string);
+		playerMap[? "name"] = buffer_read(buff, buffer_string);
+		playerMap[? "ip"] = buffer_read(buff, buffer_string);
+		playerMap[? "port"] = buffer_read(buff, buffer_u16);
+		ds_list_add(playerList, playerMap);
 		break;
 	
-	case PACKET.CLIENT_DISCONNECT:
+	case PACKET.PLAYER_DISCONNECT:
 		var player_ip = buffer_read(buff, buffer_string);
 		var player_port = buffer_read(buff, buffer_u16);
 		
-		for (var i = 0; i < ds_list_size(player_list); i++) {
-			var player_map = player_list[| i];
+		for (var i = 0; i < ds_list_size(playerList); i++) {
+			var playerMap = playerList[| i];
 			
-			if (player_map[? "ip"] == player_ip && player_map[? "port"] == player_port) {
+			if (playerMap[? "ip"] == player_ip && playerMap[? "port"] == player_port) {
 				// 플레이어 정보 초기화
-				ds_list_delete(player_list, i);
+				ds_list_delete(playerList, i);
 				break;
 			}
 		}

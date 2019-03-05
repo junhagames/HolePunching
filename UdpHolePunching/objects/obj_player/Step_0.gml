@@ -1,1 +1,1 @@
-scr_player_mov(ord("A"), ord("D"), ord("W"), ord("S"));
+scr_playerMov(ord("A"), ord("D"), ord("W"), ord("S"));
