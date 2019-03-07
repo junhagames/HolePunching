@@ -4,7 +4,16 @@
     "mvc": "1.0",
     "name": "obj_directConnectBtn",
     "eventList": [
-        
+        {
+            "id": "9ac2182e-4761-4a1a-afa7-7547b98f1c1a",
+            "modelName": "GMEvent",
+            "mvc": "1.0",
+            "IsDnD": false,
+            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
+            "enumb": 0,
+            "eventtype": 0,
+            "m_owner": "8a3c0286-af30-4ff0-b1b3-006190d384e9"
+        }
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",
     "overriddenProperties": null,

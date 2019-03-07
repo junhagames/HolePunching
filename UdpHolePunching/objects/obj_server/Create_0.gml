@@ -1,7 +1,9 @@
-socket = network_create_socket_ext(network_socket_udp, get_integer("[게임서버] 호스팅할 게임서버 소켓 포트", 2620));
-hash = net_createHash(4);
-name = get_string("호스팅할 게임서버 이름", "짱짱서버");
-master_ip = get_string("접속할 마스터서버 IP", "127.0.0.1");
-master_port = get_integer("접속할 마스터서버 PORT", 7777);
+global.serverTitle = get_string("서버 이름", 8);
+global.serverDescription = get_string("서버 설명", string(global.playerName) + "의 분노의 게임방");
+global.serverMaxPlayer = get_integer("서버 최대인원", 8);
+isServerCreate = false;
+playerList = ds_list_create();
 
+net_registerServer();
 
+alarm[0] = global.timeout;

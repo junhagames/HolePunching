@@ -1,6 +1,3 @@
-// 사설 IP 가져오기
-global.privateIp = async_load[? "ip"];
-
 var type = async_load[? "type"];
 
 switch (type) {
@@ -8,6 +5,7 @@ switch (type) {
 		var ip = async_load[? "ip"];
 		var port = async_load[? "port"];
 		var buff = async_load[? "buffer"];
-		net_client(ip, port, buff);
+		global.publicIp = async_load[? "ip"];
+		net_loby(ip, port, buff);
         break;
 }

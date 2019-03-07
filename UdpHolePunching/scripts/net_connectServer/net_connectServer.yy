@@ -1,8 +1,8 @@
 {
-    "id": "606388c6-6e50-42c5-8b45-56009c2a775a",
+    "id": "a4b68f7d-9c9b-4aeb-b6eb-996ea9898762",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "scr_playerMov",
+    "name": "net_connectServer",
     "IsCompatibility": false,
     "IsDnD": false
 }

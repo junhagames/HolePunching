@@ -1,6 +1,6 @@
 draw_set_color(c_lime);
 draw_text(0, 0, "<로비>");
-draw_text(0, 32, global.nickName + " | " + global.hash);
+draw_text(0, 32, global.playerName + " | " + global.hash);
 draw_set_color(c_white);
 
 if (!isMasterConnected) {
