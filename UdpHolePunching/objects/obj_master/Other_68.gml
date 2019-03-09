@@ -1,3 +1,4 @@
+show_message("[마스터] 네트워크 감지");
 var type = async_load[? "type"];
 
 switch (type) {

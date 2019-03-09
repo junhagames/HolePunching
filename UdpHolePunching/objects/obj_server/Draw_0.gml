@@ -1,4 +1,4 @@
-if (isServerCreate) {
+if (isServerCreated) {
 	draw_set_color(c_lime);
 	draw_text(0, 0, "<" + global.playerName + " 게임서버: " + global.hash + ">");
 	draw_set_color(c_white);
@@ -19,7 +19,7 @@ else {
 	draw_set_color(c_yellow);
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_middle);
-	draw_text(room_width / 2, room_height / 2, "마스터서버 연결중...");
+	draw_text(room_width / 2, room_height / 2, "마스터서버에 게임서버 등록중...");
 	draw_set_color(c_white);
 	draw_set_halign(fa_left);
 	draw_set_valign(fa_top);

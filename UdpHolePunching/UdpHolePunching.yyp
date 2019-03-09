@@ -167,6 +167,14 @@
             }
         },
         {
+            "Key": "5d37fea7-8a89-464b-999b-17312f464b5b",
+            "Value": {
+                "id": "568c9963-0518-4354-973e-1155508b09bd",
+                "resourcePath": "views\\5d37fea7-8a89-464b-999b-17312f464b5b.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "5e68ffc6-3a56-4e8e-bd4a-b6bacc400412",
             "Value": {
                 "id": "8a11f90a-b558-4c57-ab51-e4b1f50966de",
@@ -528,10 +536,10 @@
         "406f9d02-8714-4371-9e4b-1396c2c48896",
         "f4d2a18b-5f9a-4302-ab23-922b6f1b5e91",
         "9e19b060-500b-44dd-8784-cb5fe20b3912",
-        "7a39e5c8-6b5c-48d4-bf3c-b44196841f80",
-        "a4b68f7d-9c9b-4aeb-b6eb-996ea9898762",
         "9ec9c4c5-a6da-4ff2-afea-63d0708b1acd",
-        "cc70e425-587e-4dd2-b169-a670b85a1866"
+        "cc70e425-587e-4dd2-b169-a670b85a1866",
+        "a4b68f7d-9c9b-4aeb-b6eb-996ea9898762",
+        "7a39e5c8-6b5c-48d4-bf3c-b44196841f80"
     ],
     "tutorial": ""
 }

@@ -9,23 +9,26 @@ for (var i = 0; i < ds_list_size(playerList); i++) {
 	draw_set_color(c_red);
 	draw_text(0, 100 + 32 * (i + 1), 
 		string(playerMap[? "hash"]) + " | " +
-		string(playerMap[? "nickName"]) + " | " +
-		string(playerMap[? "privateIp"]) + " | " +
-		string(playerMap[? "publicIp"]) + " | " +
+		string(playerMap[? "ip"]) + " | " +
 		string(playerMap[? "port"]) + " | " +
+		string(playerMap[? "name"]) + " | " +
 		string(playerMap[? "serverHash"]));
 	draw_set_color(c_white);
 }
 
 for (var i = 0; i < ds_list_size(serverList); i++) {
-	var server_map = serverList[| i];
+	var serverMap = serverList[| i];
 	draw_set_color(c_blue);
 	draw_set_halign(fa_right);
 	draw_text(room_width, 100 + 32 * (i + 1),
-		string(server_map[? "hash"]) + " | " +
-		string(server_map[? "name"]) + " | " +
-		string(server_map[? "ip"]) + " | " +
-		string(server_map[? "port"]));
+		string(serverMap[? "hash"]) + " | " +
+		string(serverMap[? "ip"]) + " | " +
+		string(serverMap[? "port"]) + " | " +
+		string(serverMap[? "title"]) + " | " +
+		string(serverMap[? "description"]) + " | " +
+		string(serverMap[? "maxPlayer"]) + " | " +
+		string(serverMap[? "playerCount"]) + " | " +
+		string(serverMap[? "host"]));
 	draw_set_color(c_white);
 	draw_set_halign(fa_left);
 }

@@ -1,12 +1,12 @@
-var ip = argument[0];
-var port = argument[1];
-var buff = argument[2];
+var ip = argument0;
+var port = argument1;
+var buff = argument2;
 var command = buffer_read(buff, buffer_u8);
 
 switch (command) {
-	case COMMAND.LOBY_CONNECTED:
+	case COMMAND.PLAYER_CONNECTED_MASTER:
 	    show_message("로비에 입장했습니다!");
-		global.publicIp = buffer_read(buff, buffer_string);
+		global.publicIp = ip;
 	    isMasterConnected = true;
 		break;
 }

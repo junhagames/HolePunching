@@ -9,7 +9,8 @@
         "e8e63624-3a3e-4455-97cc-80bfab97e470",
         "406f9d02-8714-4371-9e4b-1396c2c48896",
         "f4d2a18b-5f9a-4302-ab23-922b6f1b5e91",
-        "bd688c1e-a958-4f2c-91c4-34afd041c668"
+        "bd688c1e-a958-4f2c-91c4-34afd041c668",
+        "5d37fea7-8a89-464b-999b-17312f464b5b"
     ],
     "filterType": "GMScript",
     "folderName": "네트워크",

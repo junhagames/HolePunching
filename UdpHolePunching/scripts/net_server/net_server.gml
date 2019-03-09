@@ -4,9 +4,9 @@ var buff = argument2;
 var command = buffer_read(buff, buffer_u8);
 
 switch (command) {
-	case COMMAND.CONNECTED:
+	case COMMAND.SERVER_CONNECTED_MASTER:
 	    show_message("[게임서버] 마스터서버에 등록되었습니다!");
-	    isServerCreate = true;
+	    isServerCreated = true;
 		room_goto_next();
 		break;
 	

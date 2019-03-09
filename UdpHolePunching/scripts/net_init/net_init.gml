@@ -1,20 +1,15 @@
 #macro NULL 0
 
-enum TO {
-	MASTER,
-	SERVER,
-}
-
 enum COMMAND {
-	LOBY_CONNECTED,
+	PLAYER_REGISTER_MASTER,	
+	PLAYER_CONNECTED_MASTER,
 	
-	PLAYER_REGISTER,
 	PLAYER_CONNECTING_SERVER,
 	PLAYER_CONNECTED_SERVER,
-	PLAYER_CONNECT_FAIL,
+	PLAYER_CONNECTION_SERVER_FAIL,
 	
-	SERVER_REGISTER,
-	SERVER_CONNECTED,
+	SERVER_REGISTER_MASTER,
+	SERVER_CONNECTED_MASTER,
 	SERVER_NEWPLAYER,
 	SERVER_CLOSE,
 	
@@ -25,7 +20,7 @@ enum COMMAND {
 /**
  * 환경설정
  */
-global.socket = network_create_socket_ext(network_socket_udp, get_integer("연결할 플레이어 소켓 포트", 8888));
+global.socket = network_create_socket_ext(network_socket_udp, get_integer("연결할 플레이어 소켓 포트", 7777));
 global.buffer = buffer_create(1, buffer_grow, 1);
 global.timeout = room_speed * 4;
 
