@@ -1,0 +1,1 @@
+scr_player_move(ord("A"), ord("D"), ord("W"), ord("S"));

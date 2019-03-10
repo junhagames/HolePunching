@@ -1,0 +1,1 @@
+scr_net_init();

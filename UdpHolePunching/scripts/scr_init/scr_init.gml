@@ -1,2 +1,2 @@
-draw_set_font(font_main);
+draw_set_font(fnt_main);
 randomize();

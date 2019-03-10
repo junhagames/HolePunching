@@ -1,0 +1,1 @@
+draw_sprite_ext(spr_player, -1, x, y, image_xscale, image_yscale, playerAngle, image_blend, image_alpha);
