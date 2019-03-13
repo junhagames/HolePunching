@@ -5,3 +5,6 @@ buffer_write(global.buffer, buffer_u16, COMMAND.PLAYER_CONNECTING_MASTER);
 buffer_write(global.buffer, buffer_string, global.hash);
 buffer_write(global.buffer, buffer_string, global.playerName);
 network_send_udp(global.socket, global.masterIp, global.masterPort, global.buffer, buffer_tell(global.buffer));
+
+// 마스터서버 연결시간 초과
+alarm[0] = global.timeout;

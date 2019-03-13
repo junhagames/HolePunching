@@ -5,7 +5,6 @@ var command = buffer_read(buff, buffer_u16);
 
 switch (command) {
 	case COMMAND.SERVER_CONNECTING_PLAYER:
-		show_message("새로운 플레이어 정보!");
 		// 게임서버에 플레이어 정보 추가
 		var playerMap = ds_map_create();
 		playerMap[? "hash"] = buffer_read(buff, buffer_string);
@@ -16,7 +15,6 @@ switch (command) {
 		break;
 		
 	case COMMAND.PLAYER_CONNECTING_SERVER:
-		show_message("플레이어 연결 시도!");
 		// 플레이어에게 연결하기
 		buffer_seek(global.buffer, buffer_seek_start, 0);
 		buffer_write(global.buffer, buffer_u16, COMMAND.SERVER_CONNECTING_PLAYER);

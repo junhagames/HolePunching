@@ -4,6 +4,11 @@ var buff = argument2;
 var command = buffer_read(buff, buffer_u16);
 
 switch (command) {
+	case COMMAND.PLAYER_FINDING_PRIVATEIP:
+		global.privateIp = ip;
+		scr_net_player_connectingMaster();
+		break;
+	
 	case COMMAND.PLAYER_CONNECTED_MASTER:
 	    show_message("로비에 입장했습니다!");
 		global.isMasterConnected = true;
@@ -22,7 +27,6 @@ switch (command) {
 		buffer_seek(global.buffer, buffer_seek_start, 0);
 		buffer_write(global.buffer, buffer_u16, COMMAND.PLAYER_CONNECTING_SERVER);
 		network_send_udp(global.socket, global.serverIp, global.serverPort, global.buffer, buffer_tell(global.buffer));
-		//alarm[3] = 1;
 		break;
 	
 	case COMMAND.PLAYER_FINDFAIL_SERVER:

@@ -1,6 +1,7 @@
 #macro NULL 0
 
 enum COMMAND {
+	PLAYER_FINDING_PRIVATEIP,
 	PLAYER_CONNECTING_MASTER,	
 	PLAYER_CONNECTED_MASTER,
 	
@@ -22,16 +23,21 @@ global.socket = network_create_socket_ext(network_socket_udp, get_integer("연�
 global.buffer = buffer_create(256, buffer_grow, 1);
 global.timeout = room_speed * 4;
 
+if (global.socket < 0) {
+	show_message("소켓 생성을 실패했습니다!");
+	game_end();
+}
+
 // 플레이어, 마스터서버 선택
 var select = get_integer(string_hash_to_newline("플레이어:	{ANY}#마스터서버:	{1}"), 0);
 
 if (select != 1) {
 	global.masterIp = get_string("접속할 마스터서버 IP", "127.0.0.1");
 	global.masterPort = get_integer("접속할 마스터서버 PORT", 7777);
-
 	global.hash = scr_net_createHash(4);
+	global.privateIp = NULL;
+	global.publicIp = NULL;
 	global.playerName = get_string("플레이어 닉네임", "김이박");
-
 	global.isMasterConnected = false;
 	global.isHost = false;
 	
